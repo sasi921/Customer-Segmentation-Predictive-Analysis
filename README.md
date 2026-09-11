@@ -100,6 +100,10 @@ The project explores customer-spending prediction using regression models and hi
 ├── Implementation_file.ipynb   # Complete data mining and ML workflow
 ├── Report.pdf                  # Final academic project report
 ├── data_sample.csv             # Small sample of the source dataset
+├── scripts/
+│   └── validate_dataset.py     # Preflight schema/value checks for the dataset
+├── tests/
+│   └── test_validate_dataset.py# Unit tests for the validator
 ├── requirements.txt            # Python dependencies
 ├── .gitignore                  # Local/generated file exclusions
 └── README.md                   # Project documentation
@@ -117,6 +121,24 @@ To run the complete notebook, obtain the Online Retail dataset from UCI, convert
 data.csv
 ```
 
+Before opening the notebook, run the lightweight preflight validator. It checks the expected UCI schema and catches malformed quantity, price, date, and customer-ID values early:
+
+```bash
+python scripts/validate_dataset.py data.csv
+```
+
+For a quick smoke check on a large file:
+
+```bash
+python scripts/validate_dataset.py data.csv --max-rows 10000
+```
+
+You can also validate the bundled sample immediately after cloning:
+
+```bash
+python scripts/validate_dataset.py data_sample.csv
+```
+
 ## Run Locally
 
 ```bash
@@ -129,6 +151,8 @@ Activate the environment and install dependencies:
 
 ```bash
 pip install -r requirements.txt
+python scripts/validate_dataset.py data_sample.csv
+python -m unittest discover -s tests -v
 jupyter notebook Implementation_file.ipynb
 ```
 
